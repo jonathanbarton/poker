@@ -1,0 +1,7 @@
+.playing-card__face {
+  display: none;
+}
+
+.playing-card__card {
+  margin: 5px;
+}

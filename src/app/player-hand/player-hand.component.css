@@ -1,0 +1,32 @@
+.player-hand__clear {
+  clear: both;
+}
+
+.player-hand__wrapper {
+  background-color: #6A961A;
+  height: 155px;
+  width: 400px;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.player-hand__card {
+  position: absolute;
+}
+
+.second {
+   left: 60px;
+}
+
+.third {
+  left: 100px;
+}
+
+.fourth {
+  left: 140px;
+}
+
+.fifth {
+  left: 180px;
+}

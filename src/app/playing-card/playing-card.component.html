@@ -1,0 +1,16 @@
+<article style="float: left;">
+<section class="playing-card__card" [ngClass]="{'playing-card__face': !showFace }">
+  <img
+    src="../../assets/cards/{{rank}}{{suit}}.svg"
+    alt="{{rank}}{{suit}}"
+    width="100px"
+    />
+</section>
+<section class="playing-card__card" [ngClass]="{'playing-card__face': showFace }">
+  <img
+    src="../../assets/cards/back.png"
+    alt="{{rank}}{{suit}}"
+    width="100px"
+    />
+</section>
+</article>
