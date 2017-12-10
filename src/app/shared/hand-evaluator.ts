@@ -68,7 +68,7 @@ export class HandEvaluator {
       return this.getUpdatedHand(hand, this.handNames[pair], kickers);
     }
 
-    kickers = ranks;
+    kickers = ranks.slice(0,4);
     return this.getUpdatedHand(hand, this.handNames[highCard], kickers);
   }
 
@@ -76,8 +76,23 @@ export class HandEvaluator {
     if(kickers) {
       hand.setKickers(kickers);
     }
+    const highCardValue = this.getHighCardValue(hand);
+    hand.setHighCardValue(highCardValue)
     hand.setHandName(handName);
     return hand;
+  }
+
+  private getHighCardValue(hand) {
+    const cards = hand.getCards();
+    const kickers = hand.getKickers();
+    if(kickers) {
+      const highs = cards
+        .map((card) => this.getRankValue(card))
+        .filter(card => kickers.indexOf(card))
+        .sort((a, b)=> (a < b) ? 1: -1);
+      return highs[0];
+    }
+    return false;
   }
 
   private evaluateFiveCardHands(hand, suits, ranks) {
@@ -160,7 +175,7 @@ export class HandEvaluator {
     return this.hasSameValueForRange(sortedRanks, range, this.isSameRank);
   }
 
-  private hasSameValueForRange(sortedValues, range, callback): any {
+  private hasSameValueForRange(sortedValues, range, callback) {
     const count = sortedValues
       .reduce((a, b) => Object.assign(a, {[b]: (a[b] || 0) + 1}), {});
 
@@ -169,9 +184,9 @@ export class HandEvaluator {
     const duplicates = getDuplicatesForRange(count);
 
     if(duplicates.length > 0) {
-      const removeValue = parseInt(duplicates[0]);
-      const remaining = sortedValues.filter(val => val !== removeValue);
-      return remaining;
+      const highCardValue = parseInt(duplicates[0]);
+      const kickers = sortedValues.filter(val => val !== highCardValue);
+      return kickers;
     }
     return false;
   }
@@ -185,7 +200,7 @@ export class HandEvaluator {
   }
 
   private hasCombinationHand(sortedRanks, firstRange, secondRange) {
-    const remaining = this.hasSameRankForRange(sortedRanks, firstRange);
+    let remaining = this.hasSameRankForRange(sortedRanks, firstRange);
     return (remaining)
       ? this.hasSameRankForRange(remaining, secondRange)
       : false;

@@ -4,8 +4,9 @@ import { Injectable } from '@angular/core';
 export class PlayerService {
   private players = [
     { name: 'Jonathan' },
-    { name: 'Stephen' },
-    { name: 'Billy' }
+    { name: 'Michael' },
+    { name: 'Billie' },
+    { name: 'Amy' }
   ];
 
   private playerHands = {};

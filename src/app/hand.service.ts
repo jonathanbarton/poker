@@ -102,16 +102,20 @@ export class HandService {
 
   public compareHands(hands) {
     hands = hands.sort((firstHand, secondHand) => {
-      const firstHandName = firstHand.getHandName();
-      const secondHandName = secondHand.getHandName();
-      const firstHandSortValue = this.config.handNames.indexOf(firstHandName);
-      const secondHandSortValue = this.config.handNames.indexOf(secondHandName);
+      const firstHandSortValue = this.getHandSortValue(firstHand);
+      const secondHandSortValue = this.getHandSortValue(secondHand);
       if(firstHandSortValue === secondHandSortValue) {
-        const firstHandKickers = firstHand.getKickers();
-        const secondHandKickers = secondHand.getKickers();
-        const firstHandKickerSum = this.getKickerSum(firstHandKickers);
-        const secondHandKickerSum = this.getKickerSum(secondHandKickers);
-        if(firstHandKickerSum === secondHandKickerSum) return 0;
+        const firstHandHighCardValue = firstHand.getHighCardValue();
+        const secondHandHighCardValue = secondHand.getHighCardValue();
+        if(firstHandHighCardValue !== secondHandHighCardValue) {
+          return (firstHandHighCardValue < secondHandHighCardValue) ? 1 : -1;
+        }
+
+        const firstHandKickerSum = this.getKickerSum(firstHand);
+        const secondHandKickerSum = this.getKickerSum(secondHand);
+        if(firstHandKickerSum === secondHandKickerSum) {
+          return 0;
+        }
         return (firstHandKickerSum < secondHandKickerSum) ? 1 : -1;
       }
       return (firstHandSortValue < secondHandSortValue) ? -1 : 1;
@@ -120,7 +124,14 @@ export class HandService {
     return hands;
   }
 
-  private getKickerSum(kickers) {
+  private getHandSortValue(hand) {
+    const handName = hand.getHandName();
+    return this.config.handNames.indexOf(handName);
+  }
+
+
+  private getKickerSum(hand) {
+    const kickers = hand.getKickers();
     if(kickers) {
       return kickers.reduce((kicker, memo) => memo = memo + kicker, 0)
     }

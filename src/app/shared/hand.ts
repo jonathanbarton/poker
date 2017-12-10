@@ -3,6 +3,7 @@ export class Hand {
   private handName;
   private playerName;
   private kickers;
+  private highCardValue;
 
   constructor(cards) {
     this.cards = cards;
@@ -30,6 +31,14 @@ export class Hand {
 
   public getKickers() {
     return this.kickers;
+  }
+
+  public setHighCardValue(cardValue) {
+    this.highCardValue = cardValue;
+  }
+
+  public getHighCardValue() {
+    return this.highCardValue;
   }
 
   public getCards() {
