@@ -7,7 +7,7 @@
 
 ![architecture](component-diagram.png)
 
-##Data Model
+## Data Model
 
 ### Hand
 
