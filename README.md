@@ -2,8 +2,7 @@
 
 ![Screenshot](screenshot.png)
 
-
-##Arcitecture
+## Arcitecture 
 
 ![architecture](component-diagram.png)
 
