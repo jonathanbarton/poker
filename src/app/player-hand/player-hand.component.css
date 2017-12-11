@@ -5,15 +5,18 @@
 .player-hand__wrapper {
   background-color: #6A961A;
   height: 155px;
-  width: 400px;
+  width: 90%;
+  min-width: 650px;
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
 }
 
-.player-hand__card {
-  position: absolute;
+.player-hand__info {
+  height: 155px;
 }
+
+.player-hand__card {}
 
 .second {
    left: 60px;

@@ -207,10 +207,17 @@ export class HandEvaluator {
   }
 
   private isSequence(cards) {
-    const sortedRanks = cards.map(card => this.getRankValue(card)).sort();
-    const sortedRanksSum = sortedRanks.reduce((rank, memo) => memo = memo + rank, 0);
-    const firstCardSum = sortedRanks[0] * sortedRanks.length;
-    const isSequential = (Math.abs(sortedRanksSum - firstCardSum) === sortedRanks.length);
+    const sortedRanks = cards
+      .map(card => this.getRankValue(card))
+      .sort((a,b)=> (a < b)? -1 : 1);
+    let sortedRanksSum = 0;
+    if(sortedRanks.length > 1) {
+      for(var i = 0; i < sortedRanks.length - 1; i++) {
+        sortedRanksSum = sortedRanksSum + Math.abs(sortedRanks[i] - sortedRanks[i+1]);
+      }
+    }
+
+    const isSequential = !!!Math.floor(sortedRanksSum / sortedRanks.length);
     return isSequential;
   }
 

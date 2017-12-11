@@ -10,6 +10,8 @@ import { PlayerService } from './player.service';
 export class AppComponent {
   private players = this.playerService.getPlayers();
   private showHands = false;
+  private numberOfCards = 5;
+
   constructor(
     private handService: HandService,
     private playerService: PlayerService
@@ -26,8 +28,7 @@ export class AppComponent {
   private compareHands() {
     this.showHands = true;
     const hands = this.playerService.getPlayerHands();
-    const handRankings = this.handService.compareHands(hands);
-    
+    this.handService.evaluateGame(hands);
   }
 
 }

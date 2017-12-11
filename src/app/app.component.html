@@ -1,19 +1,17 @@
 <h1> POKER </h1>
+<button (click)="compareHands()">COMPARE</button>
+<button (click)="dealAgain()">DEAL AGAIN</button>
 <app-player-hand
   playerName="YOU"
-  numberOfCards=5
+  numberOfCards={{numberOfCards}}
   (change)="updatePlayerHand($event)">
 </app-player-hand>
 
+<section *ngFor="let player of players; let playerIndex = index">
 <app-player-hand
-  *ngFor="let player of players; let playerIndex = index"
   playerName="{{player.name}}"
-  numberOfCards=5
+  numberOfCards={{numberOfCards}}
   [showFace]="showHands"
-  (change)="updatePlayerHand($event)"
-  >
+  (change)="updatePlayerHand($event)">
 </app-player-hand>
-
-<button (click)="addHand()">ADD ANOTHER HAND</button>
-<button (click)="compareHands()">COMPARE</button>
-<button (click)="dealAgain()">DEAL AGAIN</button>
+</section>

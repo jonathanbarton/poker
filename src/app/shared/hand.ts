@@ -2,6 +2,7 @@ export class Hand {
   private cards;
   private handName;
   private playerName;
+  private playerRanking;
   private kickers;
   private highCardValue;
 
@@ -44,5 +45,18 @@ export class Hand {
   public getCards() {
     return this.cards;
   }
+
+  public setCards(cards) {
+    this.cards = cards;
+  }
+
+  public getPlayerRanking() {
+    return this.playerRanking;
+  }
+
+  public setPlayerRanking(rankNumber) {
+    this.playerRanking = rankNumber;
+  }
+
 
 }

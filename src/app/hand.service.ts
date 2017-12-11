@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 
 import { Hand } from './shared/hand';
 import { HandEvaluator } from './shared/hand-evaluator';
+import { HandComparator } from './shared/hand-comparator';
 
 @Injectable()
 export class HandService {
   private static evaluator = new HandEvaluator();
+  private handComparator;
   private config = {
     suits: [
       'S',
@@ -49,6 +51,7 @@ export class HandService {
   constructor() {
     this.deck = this.getNewDeck();
     this.hands = [];
+    this.handComparator = new HandComparator(this.config);
   }
 
   public drawHand(playerName, numberOfCards) {
@@ -100,41 +103,7 @@ export class HandService {
     return Math.floor(Math.random() * deckSize);
   }
 
-  public compareHands(hands) {
-    hands = hands.sort((firstHand, secondHand) => {
-      const firstHandSortValue = this.getHandSortValue(firstHand);
-      const secondHandSortValue = this.getHandSortValue(secondHand);
-      if(firstHandSortValue === secondHandSortValue) {
-        const firstHandHighCardValue = firstHand.getHighCardValue();
-        const secondHandHighCardValue = secondHand.getHighCardValue();
-        if(firstHandHighCardValue !== secondHandHighCardValue) {
-          return (firstHandHighCardValue < secondHandHighCardValue) ? 1 : -1;
-        }
-
-        const firstHandKickerSum = this.getKickerSum(firstHand);
-        const secondHandKickerSum = this.getKickerSum(secondHand);
-        if(firstHandKickerSum === secondHandKickerSum) {
-          return 0;
-        }
-        return (firstHandKickerSum < secondHandKickerSum) ? 1 : -1;
-      }
-      return (firstHandSortValue < secondHandSortValue) ? -1 : 1;
-    });
-    console.log('sorted:', hands);
-    return hands;
-  }
-
-  private getHandSortValue(hand) {
-    const handName = hand.getHandName();
-    return this.config.handNames.indexOf(handName);
-  }
-
-
-  private getKickerSum(hand) {
-    const kickers = hand.getKickers();
-    if(kickers) {
-      return kickers.reduce((kicker, memo) => memo = memo + kicker, 0)
-    }
-    return 0;
+  public evaluateGame(hands) {
+    return this.handComparator.evaluateGame(hands);
   }
 }

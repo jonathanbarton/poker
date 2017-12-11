@@ -11,7 +11,7 @@ export class PlayerHandComponent implements OnInit {
   @Input() playerName: string;
   @Input() numberOfCards: number;
   @Input() showFace: boolean = true;
-  @Input() playerPhotoUrl: string;
+  @Input() playerRanking: string;
   @Output() change: EventEmitter<Hand> = new EventEmitter<Hand>();
 
   private hand: Hand;
@@ -26,14 +26,10 @@ export class PlayerHandComponent implements OnInit {
     const lastCardIndex = card.length-1;
     return card[lastCardIndex];
   }
-  
+
   private getRankString(card): string {
     const lastCardIndex = card.length-1;
     const rank = card.substr(0,lastCardIndex);
     return rank;
-  }
-
-  private getCardOffsetClass(cardIndex) {
-    return ['first', 'second', 'third', 'fourth', 'fifth'][cardIndex];
   }
 }

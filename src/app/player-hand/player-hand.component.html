@@ -1,13 +1,17 @@
-<p>PLAYER: {{playerName}}</p>
-<p>{{player}}</p>
 
 <article class="player-hand__wrapper">
   <app-playing-card *ngFor="let card of hand.getCards(); let cardIndex = index"
-    class="player-hand__card {{getCardOffsetClass(cardIndex)}}"
+    class="player-hand__card"
     [rank]="getRankString(card)"
     [suit]="getSuitString(card)"
     [showFace]="showFace">
   </app-playing-card>
-  <img src="{{playerPhotoUrl}}" width="100px" />
+  <section class="player-hand__info">
+    <p>PLAYER: {{playerName}}</p>
+    <aside *ngIf="showFace" >
+      <p>HAND: {{hand.handName}}</p>
+      <p>RANKING: {{hand.playerRanking}}</p>
+    </aside>
+  </section>
   <p style="clear: both;"></p>
 </article>

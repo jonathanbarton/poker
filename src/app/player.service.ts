@@ -31,4 +31,8 @@ export class PlayerService {
     }
     return hands;
   }
+
+  public getPlayerHand(player) {
+    return this.playerHands[player.name];
+  }
 }
